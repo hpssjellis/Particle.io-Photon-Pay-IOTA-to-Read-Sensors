@@ -14,6 +14,7 @@ const myParticleAccessToken = 'abc88d8888888ef8888ghi8888j88k88l888mnop'
 
 
 
+
 global.myRecieveIndex = 0    // defines when to start showing the replies! Careful will not show results if above latest recive address
 
 
@@ -263,19 +264,22 @@ async function myParticleRequest( myParticleFunctionMain, myParticleArgMain, myS
 //console.log(mySendToAddressMain)
 
     if (global.myNotStartup){
-        const myCool = await myParticleSend( myParticleFunctionMain, myParticleArgMain )    // does whatever is requested on the particle
+       // const myCool = await myParticleSend( myParticleFunctionMain, myParticleArgMain, mySendToAddressMain )    // does whatever is requested on the particle
+      myParticleSend( myParticleFunctionMain, myParticleArgMain, mySendToAddressMain )    // does whatever is requested on the particle
 
-        console.log(myCool)
+      //  console.log(myCool)
+       // console.log('myCool.return_value')
+      //  console.log(myCool.return_value)
 
        // let myMessageToSendMain = 'From Rocksetta: Some issue happened'
 
-         const myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ await myCool.return_value
+       //  const myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ await myCool.return_value
 
 
            // console.log('myMessageToSendMain')
            // console.log(myMessageToSendMain)
 
-           const myDone = await mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
+        //   const myDone = await mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
         }  // end parseInt
         else {
             console.log('Repy number 0 no message sent')
@@ -287,7 +291,7 @@ async function myParticleRequest( myParticleFunctionMain, myParticleArgMain, myS
 
 
 
-async function myParticleSend( myParticleFunction, myParticleArg ){   // has id and asses_token as global variables
+async function myParticleSend( myParticleFunction, myParticleArg, mySendToAddressMain ){   // has id and asses_token as global variables
 
 var options = {
     url: 'https://api.particle.io/v1/devices/'+myParticleId+'/'+ myParticleFunction,
@@ -298,9 +302,25 @@ var options = {
     }
 };
 
-function callback(error, response, body) {
+async function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
+        console.log('body');
         console.log(body);
+
+        const myAmount = JSON.parse(body).return_value
+        console.log('myAmount');
+        console.log(myAmount);
+
+
+         const myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ myAmount
+
+
+           // console.log('myMessageToSendMain')
+           // console.log(myMessageToSendMain)
+
+           const myDone = mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
+
+
     }
 }
 
