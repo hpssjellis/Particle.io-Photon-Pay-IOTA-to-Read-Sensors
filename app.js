@@ -14,7 +14,6 @@ const myParticleAccessToken = 'abc88d8888888ef8888ghi8888j88k88l888mnop'
 
 
 
-
 global.myRecieveIndex = 0    // defines when to start showing the replies! Careful will not show results if above latest recive address
 
 
@@ -224,13 +223,8 @@ function mySendConfirmed(myRAddress){
        // console.log(myMessage)
                                                                                                                   // sensor response
        if (response[myStateLoop].value == 0  ){                          myTempResponse += '<td>You gotta pay to read a sensor!</td>'  }
-       if (response[myStateLoop].value >= 1  && response[myStateLoop].value <= 10  ){          myParticleRequest('doAll', 'toggleLED', myMessage, 1);          myTempResponse += '<td>Toggles the D7 LED</td>'  }
-       if (response[myStateLoop].value >= 11  && response[myStateLoop].value <= 100  ){        myParticleRequest('doAll', 'temperature', myMessage, 2);        myTempResponse += '<td>Temperature reading</td>'  }
-       if (response[myStateLoop].value >= 101  && response[myStateLoop].value <= 1000 ){        myParticleRequest('doAll', 'photoResistor', myMessage, 3);     myTempResponse += '<td>Photoresistor reading</td>'  }
-       if (response[myStateLoop].value >= 1001  && response[myStateLoop].value <= 10000 ){       myParticleRequest('doAll', 'rangeFinder', myMessage, 4);      myTempResponse += '<td>Rangefinder reading</td>'  }
-       if (response[myStateLoop].value >= 10001  && response[myStateLoop].value <= 100000  ){     myParticleRequest('doAll', 'accelerometer', myMessage, 5);   myTempResponse += '<td>Accelerometer xyz reading</td>'  }
-       if (response[myStateLoop].value >= 100001  && response[myStateLoop].value <= 1000000  ){    myParticleRequest('doAll', 'GPS', myMessage, 6);            myTempResponse += '<td>GPS reading</td>'  }
-       if (response[myStateLoop].value >  1000001 ){     myParticleRequest('doAll', 'everthing', myMessage, 7);                                                myTempResponse += '<td>Get all sensor readings</td>'  }
+       if (response[myStateLoop].value >= 1  && response[myStateLoop].value <= 10  ){          myParticleSend('doAll', 'toggleLED', myMessage);          myTempResponse += '<td>Toggles the D7 LED</td>'  }
+         if (response[myStateLoop].value >  10 ){                                              myParticleSend('doAll', 'photoResistor', myMessage);      myTempResponse += '<td>photoresistor reading sent</td>'  }
 
 //doAll
        myTempResponse += '<td>'+response[myStateLoop].address.substring(0, 5)+'...</td>'
@@ -257,7 +251,7 @@ function mySendConfirmed(myRAddress){
 }
 
 
-
+/*
 async function myParticleRequest( myParticleFunctionMain, myParticleArgMain, mySendToAddressMain, myReplyNumber ){
 
 //console.log('mySendToAddressMain')
@@ -287,7 +281,7 @@ async function myParticleRequest( myParticleFunctionMain, myParticleArgMain, myS
     }
 
 
-
+*/
 
 
 
@@ -312,19 +306,26 @@ async function callback(error, response, body) {
         console.log(myAmount);
 
 
-         const myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ myAmount
+         let myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ myAmount
+
+        if ( myParticleArg == 'toggleLED'){ myMessageToSendMain = 'From Rocksetta: You toggled the D7 LED '   }
 
 
            // console.log('myMessageToSendMain')
            // console.log(myMessageToSendMain)
 
-           const myDone = mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
+          //const myDone = mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
+           mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
 
 
     }
 }
 
-request(options, callback);
+/////////////////// This is actually the main part of this function
+
+    if (global.myNotStartup){
+       request(options, callback);
+    }
 
 }
 
@@ -399,9 +400,12 @@ app.get('/', function(req, res) {
 
        <h3 align=center>Particle Photon Automated IOTA Sensor Web App</h3>
 
-<li>Using your Trinity Wallet copy your own receive address and then place that address in the SEND message area
+<li> Refresh the page to check that the receive address is fresh
 
-<li>Copy the below receive address and place that in your SEND address area
+<li>Using your Trinity Wallet copy the below receive address and place that in your SEND ADDRESS area, record the first few characters
+
+<li>Using your Trinity Wallet switch to recieve and copy your own receive address, then switch back to send and place your receive address in the SEND MESSAGE area, record the first few characters
+
 
 <li> Send the appropriate number of IOTA, See list below
 
@@ -409,7 +413,7 @@ app.get('/', function(req, res) {
 
 <li> If the chart does not update, reclick the submit button or click the "reload" button until your IOTA is confirmed in the chart
 
-<li> Check your Trinity wallet for an automated reply with your sensor readings.
+<li> Check your Trinity wallet for an automated reply with your sensor reading or proof of toggling the D7 LED.
 
 <li>May need to click the "reload" button again to get a new recieve address<br><br>
 
