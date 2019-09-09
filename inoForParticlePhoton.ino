@@ -14,13 +14,13 @@ int doAllFunction(String myCommand) {
     if  (myCommand == "toggleLED"){
         digitalWrite(D7, !digitalRead(D7));
         Particle.publish("myCommand variable is: ", myCommand, 60, PRIVATE);  
-      myReturn = -1;  
+      myReturn = digitalRead(D7);    // just so it is either 0 or 1
 
     } else if (myCommand == "photoResistor"){
         
         myReturn = analogRead(A0);   
     } else {
-        myReturn = -2; 
+        myReturn = -1;   // showing an incorrect argument
     }
     return myReturn;                                
 }
