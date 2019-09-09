@@ -23,10 +23,12 @@ Or just do your normal way of loading a Github Nodejs site (Be aware that a few 
 
 
 
-3 variables at the top of the code must be adjusted for your data
+##3 variables at the top of the code must be adjusted for your data
 
 mySeed
+
 myParticleID
+
 myParticleAccessToken
 
 
@@ -58,7 +60,7 @@ Then run
 
 -------------------------------------------------------
 
-For Developers wanting to try this you need a Particle Photon and a secure Nodejs website
+##For Developers wanting to try this you need a Particle Photon and a secure Nodejs website
 
 Set up your photon as normal https://www.particle.io/
 
@@ -66,8 +68,11 @@ In the code you will need to change
 (As these are important to you you should only use a private Github or Private Nodejs server.)
 
 IOTA seed
+
 Particel ID
+
 Particel Assess token
+
 
 -------------------------------------------------------------------------------------------------------------------
 
