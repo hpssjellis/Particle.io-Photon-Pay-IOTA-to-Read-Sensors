@@ -67,11 +67,16 @@ Set up your photon as normal https://www.particle.io/
 In the code you will need to change 
 (As these are important to you you should only use a private Github or Private Nodejs server.)
 
-IOTA seed
+```
 
-Particel ID
+const mySeed = 'DONOTSTOREYOURSEEDONAPUBLICGITHUBSITEASANYONECANSTEALALLYOUR9IOTATOKENSKEEPITSAFE'   //Your secret seed. All your tokens
+          //   'ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9' // SEED MUST BE THIS LENGTH
 
-Particel Assess token
+const myParticleId = '888888888888888888888888'    // specific to your Particle.io Photon
+
+const myParticleAccessToken = 'abc88d8888888ef8888ghi8888j88k88l888mnop'  // specific to your Particle.io login and can be changed
+
+```
 
 
 -------------------------------------------------------------------------------------------------------------------
