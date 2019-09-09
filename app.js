@@ -14,6 +14,7 @@ const myParticleAccessToken = 'abc88d8888888ef8888ghi8888j88k88l888mnop'
 
 
 
+
 global.myRecieveIndex = 0    // defines when to start showing the replies! Careful will not show results if above latest recive address
 
 
@@ -251,41 +252,9 @@ function mySendConfirmed(myRAddress){
 }
 
 
-/*
-async function myParticleRequest( myParticleFunctionMain, myParticleArgMain, mySendToAddressMain, myReplyNumber ){
-
-//console.log('mySendToAddressMain')
-//console.log(mySendToAddressMain)
-
-    if (global.myNotStartup){
-       // const myCool = await myParticleSend( myParticleFunctionMain, myParticleArgMain, mySendToAddressMain )    // does whatever is requested on the particle
-      myParticleSend( myParticleFunctionMain, myParticleArgMain, mySendToAddressMain )    // does whatever is requested on the particle
-
-      //  console.log(myCool)
-       // console.log('myCool.return_value')
-      //  console.log(myCool.return_value)
-
-       // let myMessageToSendMain = 'From Rocksetta: Some issue happened'
-
-       //  const myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ await myCool.return_value
 
 
-           // console.log('myMessageToSendMain')
-           // console.log(myMessageToSendMain)
-
-        //   const myDone = await mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
-        }  // end parseInt
-        else {
-            console.log('Repy number 0 no message sent')
-        }
-    }
-
-
-*/
-
-
-
-async function myParticleSend( myParticleFunction, myParticleArg, mySendToAddressMain ){   // has id and asses_token as global variables
+function myParticleSend( myParticleFunction, myParticleArg, mySendToAddressMain ){   // has id and asses_token as global variables
 
 var options = {
     url: 'https://api.particle.io/v1/devices/'+myParticleId+'/'+ myParticleFunction,
@@ -296,7 +265,7 @@ var options = {
     }
 };
 
-async function callback(error, response, body) {
+function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
         console.log('body');
         console.log(body);
@@ -308,14 +277,18 @@ async function callback(error, response, body) {
 
          let myMessageToSendMain = 'From Rocksetta: The Photoresistor reads: '+ myAmount
 
-        if ( myParticleArg == 'toggleLED'){ myMessageToSendMain = 'From Rocksetta: You toggled the D7 LED '   }
-
-
+        if ( myParticleArg == 'toggleLED'){
+            if (myAmount == 0){
+                myMessageToSendMain = 'From Rocksetta: You toggled the D7 LED OFF '
+            } else {
+                myMessageToSendMain = 'From Rocksetta: You toggled the D7 LED ON '
+            }
+        }
            // console.log('myMessageToSendMain')
            // console.log(myMessageToSendMain)
 
-          //const myDone = mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
-           mySendMessage(mySendToAddressMain, myMessageToSendMain)            // send a 0 value message as a rely
+          //const myDone = mySendMessage(mySendToAddressMain, myMessageToSendMain)
+           mySendMessage(mySendToAddressMain, myMessageToSendMain)                          // send a 0 value message as a rely
 
 
     }
@@ -398,7 +371,7 @@ app.get('/', function(req, res) {
 // use backtick to write web page
    global.myCombined = `
 
-       <h3 align=center>Particle Photon Automated IOTA Sensor Web App</h3>
+<h3 align=center>Particle Photon Automated IOTA Sensor Web App</h3>
 
 <li> Refresh the page to check that the receive address is fresh
 
