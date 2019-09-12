@@ -1,6 +1,11 @@
 # Particle.io-Photon-Pay-IOTA-to-Read-Sensors
 Hackster competition for which I will Pay IOTA to Read Photoresistor information from a Particle.io Photon microprocessor
 
+https://www.hackster.io/contests/machine-money-with-iota
+
+
+Video at https://youtu.be/9iR0XZeV_FQ
+
 
 
 Started August 19th, 2019
